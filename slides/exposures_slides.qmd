@@ -24,9 +24,7 @@ Rebecca Bucci
 
 ![](img/phdcn_logo_white.svg)
 
-::: footer
-Sampson, Robert J., David S. Kirk, and Rebecca Bucci. 2022. "Cohort Profile: Project on Human Development in Chicago Neighborhoods and Its Additions (PHDCN+)." *Journal of Developmental and Life-Course Criminology* 8.  https://doi.org/10.1007/s40865-022-00203-0.
-:::
+
 
 ## Goal
 
@@ -37,6 +35,10 @@ Sampson, Robert J., David S. Kirk, and Rebecca Bucci. 2022. "Cohort Profile: Pro
 * Correlates of ETV
 
 * Long-term consequences of ETV
+
+::: footer
+See Sampson, Kirk, & Bucci. 2022. "Cohort Profile: Project on Human Development in Chicago Neighborhoods and Its Additions (PHDCN+)." *Journal of Developmental and Life-Course Criminology* 8.  https://doi.org/10.1007/s40865-022-00203-0.
+:::
 
 ## Timeline
 
@@ -122,6 +124,8 @@ Homicide rate ranges between 16 and 37 per 100,000 population
 :::
 
 
+# Next Section {background-image="img/ben-sp-fD4AwrWv4t8-unsplash-crop.jpg" background-opacity=0.3}
+
 ## Approach
 
 > Brief mention of interval censoring, use of Turnbull NPMLE, SPT Prop Hazards
@@ -135,3 +139,9 @@ Homicide rate ranges between 16 and 37 per 100,000 population
    * Tract average Homicide rate
    * Tract concentrated disadvantage
    * NC collective efficacy
+   
+# Another Section {background-image="img/ozzie-stern-dkwJLowVvl4-unsplash.jpg" background-opacity=0.3}
+
+# Many Sections {background-image="img/clay-banks-nsAn3nSW5T0-unsplash.jpg" background-opacity=0.3}
+
+# Extra Section {background-image="img/joel-mott-s-rsM-AktbA-unsplash.jpg" background-opacity=0.3}
