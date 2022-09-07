@@ -3,6 +3,8 @@ format:
   revealjs:
     theme: night
 editor: visual
+mouse-wheel: true
+history: false
 ---
 
 ## The Changing Risks of Exposure to Gun Violence in Chicago {background-image="img/stephan-cassara-KnAIsBuitGg-unsplash.jpg" background-opacity=0.3}
