@@ -1,0 +1,135 @@
+---
+format:
+  revealjs:
+    theme: night
+editor: visual
+---
+
+## The Changing Risks of Exposure to Gun Violence in Chicago {background-image="img/stephan-cassara-KnAIsBuitGg-unsplash.jpg" background-opacity=0.3}
+
+Charles C. Lanfear
+
+Robert J. Sampson
+
+David S. Kirk
+
+Rebecca Bucci
+
+
+
+
+# The {background-image="img/max-bender-yb7Yg3Rv7WA-unsplash.jpg" background-opacity=0.3}
+
+![](img/phdcn_logo_white.svg)
+
+::: footer
+Sampson, Robert J., David S. Kirk, and Rebecca Bucci. 2022. "Cohort Profile: Project on Human Development in Chicago Neighborhoods and Its Additions (PHDCN+)." *Journal of Developmental and Life-Course Criminology* 8.  https://doi.org/10.1007/s40865-022-00203-0.
+:::
+
+## Goal
+
+### Examine life-course change and cohort differentiation
+
+* Describe exposure to violence (ETV), continuity and change
+
+* Correlates of ETV
+
+* Long-term consequences of ETV
+
+## Timeline
+
+```{r, dev = "ragg_png",  dev.args = list(bg = 'transparent')}
+library(tidyverse)
+library(ggforce)
+library(ggtext)
+
+df <- tribble(
+  ~cohort, ~time, ~year, ~age, 
+  0,  1, 1995,  0,
+  0,  2, 2021, 25,
+  3,  1, 1995,  3,
+  3,  2, 2002, 11,
+  6,  1, 1995,  6,
+  6,  2, 2002, 14,
+  9,  1, 1995, 9, 
+  9,  2, 2021, 34,
+  12, 1, 1995, 12,
+  12, 2, 2021, 37,
+  15, 1, 1995, 15,
+  15, 2, 2021, 40,
+  18, 1, 1995, 18,
+  18, 2, 2002, 26,
+) 
+
+cs_df <- tibble(
+  survey = rep(c("PHDCN-CS", "CCAHS"), each = 7),
+  year   = rep(c(1995, 2002), each = 7),
+  cohort = rep(seq(0,18, by = 3), length.out = 14)
+)
+
+
+ggplot(df, aes(x = year, y = cohort, group = cohort)) + 
+  geom_line(size = 3, color = "white") +
+  geom_richtext(aes(label = age), size = 5) +
+  theme_minimal(base_size = 24) +
+  labs(y = "Cohort Ages", x= NULL) +
+  scale_x_continuous(breaks = seq(1995, 2021, by = 5), limits = c(1994,2022)) +
+  scale_y_continuous(limits = c(-1,22)) +
+  geom_mark_rect(data = cs_df, aes(group = year), color = "red", expand = unit(6, "mm")) +
+  annotate("text", x = 1998.5, y = 21, label = "Community\nSurveys", color = "red", size = 5) +
+  theme(panel.grid = element_blank(),
+        axis.text.y = element_blank(),
+        axis.text.x = element_text(color = "grey90"),
+        text = element_text(family = "sans",  color = "white"),
+        panel.background = element_rect(fill = "transparent",colour = NA),
+        plot.background = element_rect(fill = "transparent",colour = NA))
+```
+
+## Contexts of Violence
+
+```{r, dev = "ragg_png",  dev.args = list(bg = 'transparent')}
+load("./data/cohort_age_hom.RData")
+
+cohort_age_hom %>%
+  mutate(cohort = str_remove(cohort, "Cohort "),
+         cohort = fct_reorder(cohort, as.numeric(cohort)),
+         cohort = fct_rev(cohort)) %>%
+  ggplot(aes(x = age, y = hom_rate, color = cohort)) + 
+  geom_line() + 
+  facet_grid(cohort~ ., switch = "y") +  
+  xlim(0, 40) +
+  scale_y_continuous(breaks = c(20, 30), 
+                     position = "right", 
+                     sec.axis = sec_axis(trans = ~.*0, name = "Cohort")) +
+  annotate("rect", xmin = 13, xmax = 25, ymin = -Inf, ymax = Inf, fill = "white", alpha = 0.3) +
+  theme_minimal(base_size = 24) +
+  labs(x = "Cohort member age", y = "Homicide Rate") +
+  theme(panel.grid = element_blank(),
+        axis.text = element_text(color = "grey90"),
+        axis.text.y.right =  element_blank(),
+        axis.text.y.left  = element_blank(),
+        strip.text = element_text(color = "grey90", angle = 90),
+        legend.position = "none",
+        text = element_text(family = "sans",  color = "white"),
+        panel.background = element_rect(fill = "transparent",colour = NA),
+        plot.background = element_rect(fill = "transparent",colour = NA))
+```
+
+::: footer
+Homicide rate ranges between 16 and 37 per 100,000 population
+:::
+
+
+## Approach
+
+> Brief mention of interval censoring, use of Turnbull NPMLE, SPT Prop Hazards
+
+## Covariates
+
+* Race
+* Sex
+* Immigrant Generation
+* Neighborhood Context in Childhood
+   * Tract average Homicide rate
+   * Tract concentrated disadvantage
+   * NC collective efficacy
