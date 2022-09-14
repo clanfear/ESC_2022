@@ -2,10 +2,51 @@
 format:
   revealjs:
     theme: night
+    logo: img/phdcn_logo_white.svg
+    incremental: true
 editor: visual
 mouse-wheel: true
 history: false
 ---
+
+```{r setup}
+#| include: false
+library(tidyverse)
+library(ggforce)
+library(ggtext)
+library(showtext)
+load("./data/survival_data.RData")
+knitr::opts_chunk$set(dev = "ragg_png",  
+                      dev.args = list(bg = 'transparent'),
+                      message = FALSE,
+                      echo = FALSE,
+                      warning = FALSE,
+                      fig.showtext = TRUE,
+                      fig_retina = 1)
+plot_font <- "Open Sans"
+get_age_percents <- function(x, .race = NULL, .cohort = NULL){
+  if(is.null(.race) & is.null(.cohort)){
+    exposure_ecdf <- ecdf(x$age_right)
+    return(exposure_ecdf(1:40))
+  } else if (is.character(.race)){
+    exposure_ecdf <- ecdf(x$age_right[x$race == .race])
+    return(exposure_ecdf(1:40))
+  } else if (is.character(.cohort)){
+    exposure_ecdf <- ecdf(x$age_right[x$cohort == .cohort])
+    return(exposure_ecdf(1:40))
+  } else {
+    stop("If provided, race or cohort must be a character value")
+  }
+}
+```
+
+```{r}
+#| include: false
+#| cache: true
+
+font_add_google(name = plot_font)
+
+```
 
 ## The Changing Risks of Exposure to Gun Violence in Chicago {background-image="img/stephan-cassara-KnAIsBuitGg-unsplash.jpg" background-opacity=0.3}
 
@@ -18,23 +59,93 @@ David S. Kirk
 Rebecca Bucci
 
 
+## Homicide Rates in Chicago
 
+```{r}
+load("./data/hom_rate_df.RData")
+hom_rate_df %>%
+  select(year, gun_hom_rate, hom_rate) %>%
+  pivot_longer(-year) %>%
+  mutate(name = ifelse(str_detect(name, "gun"), "Gun\nHomicide", "All\nHomicide")) %>%
+  filter(!is.na(value)) %>%
+  ggplot(aes(x = year, y = value, group = name, color = name)) + 
+  geom_line(size = 1) +
+  labs(x = NULL, y = "Homicides per 100,000") +
+  scale_y_continuous(limits = c(0, NA)) +
+  geom_text(data = tibble(name = c("Gun\nHomicide", "All\nHomicide"),
+                          year = c(1985, 1985),
+                          value = c(10, 31)),
+            aes(label = name),
+            size = 6, family = plot_font) +
+  theme_minimal(base_size = 24) +
+  theme(panel.grid.major.x = element_blank(),
+        panel.grid.minor.x = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        panel.grid.major.y = element_blank(),
+        axis.text.x = element_text(color = "grey90"),
+        axis.text.y = element_text(color = "grey90"),
+        axis.title.y = element_text(color = "grey90"),
+        axis.ticks.y = element_line(color = "grey90"), 
+        text = element_text(family = plot_font,  color = "white"),
+        panel.background = element_rect(fill = "transparent",colour = NA),
+        plot.background = element_rect(fill = "transparent",colour = NA),
+        legend.position = "none")
+```
+
+::: {.notes}
+Enormous variation in homicide; early 1990s peak double the period 2005-2015
+:::
+
+
+## Questions
+
+&nbsp;
+
+::: {.fragment}
+How were children growing up in this period exposed to **gun violence**?
+:::
+
+
+&nbsp;
+
+::: {.fragment}
+And how does this exposure differ... 
+:::
+
+::: {.fragment}
+| ... by **cohort**?
+:::
+
+::: {.fragment}
+| ... by **race** and **sex**?
+:::
+
+::: {.fragment}
+| ... by **neighbourhood** context?
+:::
 
 # The {background-image="img/max-bender-yb7Yg3Rv7WA-unsplash.jpg" background-opacity=0.3}
 
 ![](img/phdcn_logo_white.svg)
 
 
+---
 
-## Goal
+### Project on Human Development in Chicago Neighborhoods
 
-### Examine life-course change and cohort differentiation
+* 6200 children in 7 birth cohorts
+* Interviewed in 3 waves from 1995–2002
+* Community surveys in 1995 and 2002
 
-* Describe exposure to violence (ETV), continuity and change
+::: {.fragment}
+### PHDCN+
+:::
 
-* Correlates of ETV
+* Representative sample of 4 cohorts
+* 1057 interviewed in 2012 
+* 682 followed-up in 2021
+* Focus: **Gun Violence**
 
-* Long-term consequences of ETV
 
 ::: footer
 See Sampson, Kirk, & Bucci. 2022. "Cohort Profile: Project on Human Development in Chicago Neighborhoods and Its Additions (PHDCN+)." *Journal of Developmental and Life-Course Criminology* 8.  https://doi.org/10.1007/s40865-022-00203-0.
@@ -42,11 +153,7 @@ See Sampson, Kirk, & Bucci. 2022. "Cohort Profile: Project on Human Development 
 
 ## Timeline
 
-```{r, dev = "ragg_png",  dev.args = list(bg = 'transparent')}
-library(tidyverse)
-library(ggforce)
-library(ggtext)
-
+```{r}
 df <- tribble(
   ~cohort, ~time, ~year, ~age, 
   0,  1, 1995,  0,
@@ -63,74 +170,153 @@ df <- tribble(
   15, 2, 2021, 40,
   18, 1, 1995, 18,
   18, 2, 2002, 26,
-) 
+) %>%
+  mutate(focus = ifelse(cohort %in% c(0,9,12,15), "yes", "no"))
 
 cs_df <- tibble(
   survey = rep(c("PHDCN-CS", "CCAHS"), each = 7),
   year   = rep(c(1995, 2002), each = 7),
   cohort = rep(seq(0,18, by = 3), length.out = 14)
 )
+wave_df <- tibble(
+  survey = rep(1:5, length.out = 35),
+  year   = rep(c(1995, 1998.5, 2002, 2012, 2021), length.out = 35),
+  cohort = rep(seq(0,18, by = 3), each = 5)
+) %>%
+  filter(year <= 2002 | cohort %in% c(0, 9, 15)) %>%
+  mutate(group = 
+           case_when(
+            year <= 2002 ~ year, 
+            year > 2002 & cohort %in% c(9,15,18) ~ year,
+            year > 2002 & cohort == 0 ~ year -1),
+         phdcn = ifelse(year <= 2002, "PHDCN", "PHDCN+"))
 
 
 ggplot(df, aes(x = year, y = cohort, group = cohort)) + 
-  geom_line(size = 3, color = "white") +
-  geom_richtext(aes(label = age), size = 5) +
+   # geom_mark_rect(data = cs_df, aes(group = year), fill = "#00BFC4", color = NA, expand = unit(7, "mm"), ) +
+    geom_mark_rect(data = wave_df, aes(group = group, fill = phdcn), color = NA, expand = unit(6, "mm")) +
+  geom_line(size = 3, aes(color = focus)) +
+  geom_richtext(aes(label = age, fill = focus), 
+                size = 5, label.colour = NA, text.color = "black") +
   theme_minimal(base_size = 24) +
+  scale_fill_manual(values = c("yes" = "white", "no" = "grey50", "PHDCN" = "#F8766D", "PHDCN+" = "#00BFC4")) +
+  scale_color_manual(values = c("yes" = "white", "no" = "grey50", "PHDCN" = "#F8766D", "PHDCN+" = "#00BFC4")) +
   labs(y = "Cohort Ages", x= NULL) +
   scale_x_continuous(breaks = seq(1995, 2021, by = 5), limits = c(1994,2022)) +
   scale_y_continuous(limits = c(-1,22)) +
-  geom_mark_rect(data = cs_df, aes(group = year), color = "red", expand = unit(6, "mm")) +
-  annotate("text", x = 1998.5, y = 21, label = "Community\nSurveys", color = "red", size = 5) +
+  
+  annotate("text", x = 1998.5, y = 21.25, family = plot_font, label = "Original PHDCN\nWaves 1–3", color = "#F8766D", size = 5) +
+  annotate("text", x = 2016.5, y = 21.25, family = plot_font, label = "PHDCN+\nWaves 4 & 5", color = "#00BFC4", size = 5) +
   theme(panel.grid = element_blank(),
         axis.text.y = element_blank(),
         axis.text.x = element_text(color = "grey90"),
-        text = element_text(family = "sans",  color = "white"),
+        text = element_text(family = plot_font,  color = "white"),
         panel.background = element_rect(fill = "transparent",colour = NA),
-        plot.background = element_rect(fill = "transparent",colour = NA))
+        plot.background = element_rect(fill = "transparent",colour = NA),
+        legend.position = "none")
 ```
+
+::: {.notes}
+PHDCN+ covers much longer time period than original PHDCN: Age 0 to 40, 25 years within each cohort
+
+Well past peak criminal involvement and exposure ages
+:::
 
 ## Contexts of Violence
 
-```{r, dev = "ragg_png",  dev.args = list(bg = 'transparent')}
+```{r}
 load("./data/cohort_age_hom.RData")
-
+axis_data <- tibble(cohort = factor(c(0, 9, 12, 15), levels = c(0, 9, 12, 15)),
+                          hom_rate = rep(24.8,4),
+                          age = rep(-3, 4))
 cohort_age_hom %>%
   mutate(cohort = str_remove(cohort, "Cohort "),
          cohort = fct_reorder(cohort, as.numeric(cohort)),
          cohort = fct_rev(cohort)) %>%
   ggplot(aes(x = age, y = hom_rate, color = cohort)) + 
   geom_line() + 
-  facet_grid(cohort~ ., switch = "y") +  
-  xlim(0, 40) +
+  facet_wrap(~cohort, strip.position = "left", ncol = 1) +  
   scale_y_continuous(breaks = c(20, 30), 
                      position = "right", 
                      sec.axis = sec_axis(trans = ~.*0, name = "Cohort")) +
   annotate("rect", xmin = 13, xmax = 25, ymin = -Inf, ymax = Inf, fill = "white", alpha = 0.3) +
   theme_minimal(base_size = 24) +
+  geom_text(data = axis_data,
+            aes(label = cohort), size = 7) +
+  coord_cartesian(clip = FALSE, xlim = c(0,40)) +
   labs(x = "Cohort member age", y = "Homicide Rate") +
   theme(panel.grid = element_blank(),
         axis.text = element_text(color = "grey90"),
         axis.text.y.right =  element_blank(),
         axis.text.y.left  = element_blank(),
-        strip.text = element_text(color = "grey90", angle = 90),
+        strip.text.y.left = element_text(color =  "transparent", angle = 0),
         legend.position = "none",
-        text = element_text(family = "sans",  color = "white"),
+        text = element_text(family = plot_font,  color = "white"),
         panel.background = element_rect(fill = "transparent",colour = NA),
         plot.background = element_rect(fill = "transparent",colour = NA))
 ```
 
-::: footer
-Homicide rate ranges between 16 and 37 per 100,000 population
+
+::: {.notes}
+
+Align by age instead of year---see age-specific violence context
+
+Age 13 to 25 highlighted as peak risk period
+
+4 different patterns: High decline, medium decline, stable low, rising
 :::
 
+# Another Section {background-image="img/ozzie-stern-dkwJLowVvl4-unsplash.jpg" background-opacity=0.3}
 
-# Next Section {background-image="img/ben-sp-fD4AwrWv4t8-unsplash-crop.jpg" background-opacity=0.3}
 
-## Approach
+## Exposure to Gun Violence
 
-> Brief mention of interval censoring, use of Turnbull NPMLE, SPT Prop Hazards
+Has the respondent...
 
-## Covariates
+* ever been shot?
+   * Age asked in waves 2 and 5
+
+* ever seen someone else get shot?
+   * Age only asked in wave 2
+
+## Cohort Differences
+
+```{r}
+cohort_vec <- as.character(c(0,9,12,15))
+names(cohort_vec) <- cohort_vec
+cohort_max_ages <- c("0" = 26,
+                     "9" = 35,
+                     "12" = 38,
+                     "15" = 41)
+map_dfr(cohort_vec, 
+        ~map2_dfr(.x = survival_data[c("been_shot", "seen_shot")], .y = .x, ~get_age_percents(.x, .cohort = .y)) %>%
+         mutate(age = row_number()), .id = "cohort") %>%
+  pivot_longer(-c(cohort,age)) %>%
+  mutate(name = str_to_title(str_replace(name, "_", "\n")),
+         name = fct_relevel(name, "Seen\nShot","Been\nShot"),
+          max_age = cohort_max_ages[cohort],
+         cohort = factor(cohort, levels = rev(c(0,9,12,15)))
+        ) %>%
+  filter(age <= max_age) %>%
+  ggplot(aes(x = age, y = value, group = cohort, color = cohort)) + 
+  facet_wrap(~name, ncol = 1, scales = "free_y", strip.position = "left") +
+  geom_line() + 
+  geom_richtext(data = . %>% group_by(cohort) %>% slice_max(age), aes(label = cohort, color = cohort)) +
+  theme_minimal(base_size = 24) + 
+  labs(x = "Age", y = "Proportion", color = "Cohort") +
+  theme(panel.grid = element_blank(),
+        axis.text = element_text(color = "grey90"),
+        axis.text.y.right =  element_blank(),
+        axis.text.y.left  = element_text(color = "grey90"),
+        strip.text.y.left = element_text(color =  "grey90", angle = 0),
+        legend.position = "none",
+        text = element_text(family = plot_font,  color = "white"),
+        panel.background = element_rect(fill = "transparent",colour = NA),
+        plot.background = element_rect(fill = "transparent",colour = NA))
+```
+
+
+## What Predicts Exposure?
 
 * Race
 * Sex
@@ -139,9 +325,18 @@ Homicide rate ranges between 16 and 37 per 100,000 population
    * Tract average Homicide rate
    * Tract concentrated disadvantage
    * NC collective efficacy
-   
-# Another Section {background-image="img/ozzie-stern-dkwJLowVvl4-unsplash.jpg" background-opacity=0.3}
 
-# Many Sections {background-image="img/clay-banks-nsAn3nSW5T0-unsplash.jpg" background-opacity=0.3}
+## Tabular result
 
-# Extra Section {background-image="img/joel-mott-s-rsM-AktbA-unsplash.jpg" background-opacity=0.3}
+
+## Approach
+
+> Brief mention of interval censoring, use of Turnbull NPMLE, SPT Prop Hazards
+
+# Results {background-image="img/clay-banks-nsAn3nSW5T0-unsplash.jpg" background-opacity=0.3}
+
+
+
+# Discussion {background-image="img/joel-mott-s-rsM-AktbA-unsplash.jpg" background-opacity=0.3}
+
+# Appendix {background-image="img/ben-sp-fD4AwrWv4t8-unsplash-crop.jpg" background-opacity=0.3}
