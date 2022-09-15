@@ -164,6 +164,9 @@ We'll be focusing mostly on cohort and race here.
 * 682 followed-up in 2021
 * Focus: **Gun Violence**
 
+::: {.footer}
+See Sampson, Kirk, & Bucci (2022)
+:::
 
 ## Timeline
 
@@ -543,13 +546,12 @@ Very modest relationship between exposure and neighborhood measures; trumped by 
 
 * Being shot tends to occur later in life than seeing shootings
 
-  * Seen shootings higher when homicide high in adolescence
-  * Being shot higher when homicide high in early adulthood
+  * Seeing shootings more likely when homicide is high in adolescence
+  * Being shot more likely when homicide is high in early adulthood
 
-* For white respondents:
+* Risk of being shot continues throughout adulthood for black and Hispanic but not white respondents
 
-  * Seeing someone shot lower across life course
-  * Being shot diverges sharply in adulthood
+* Seeing shootings much less common for white respondents
 
 
 # Appendix {background-image="img/ben-sp-fD4AwrWv4t8-unsplash-crop.jpg" background-opacity=0.3}
