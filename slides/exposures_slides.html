@@ -327,13 +327,19 @@
 </section>
 <section id="homicide-rates-in-chicago" class="slide level2">
 <h2>Homicide Rates in Chicago</h2>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<p><img data-src="exposures_slides_files/figure-revealjs/unnamed-chunk-2-1.png" width="960"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="exposures_slides_files/figure-revealjs/unnamed-chunk-2-1.svg"></p>
+</figure>
+</div>
 </div>
 </div>
 <aside class="notes">
-<p>Enormous variation in homicide; early 1990s peak double the period 2005-2015</p>
+<p>Enormous variation in homicide; early 1990s peak was double the period 2005-2015</p>
+<p>Resurgence since 2017</p>
+<p>Even during low periods, this is ten or more times the homicide rate of major European cities</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -346,7 +352,7 @@
           display:block!important;
       }</style></aside>
 </section>
-<section id="questions" class="slide level2">
+<section id="questions" class="slide level2" data-background-image="img/stephan-cassara-KnAIsBuitGg-unsplash.jpg" data-background-opacity="0.1">
 <h2>Questions</h2>
 <p>&nbsp;</p>
 <div class="fragment">
@@ -365,14 +371,27 @@
 <div class="fragment">
 <p>… by <strong>neighbourhood</strong> context?</p>
 </div>
+<aside class="notes">
+<p>We’ll be focusing mostly on cohort and race here.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section>
 <section id="the" class="title-slide slide level1 center" data-background-image="img/max-bender-yb7Yg3Rv7WA-unsplash.jpg" data-background-opacity="0.3">
 <h1>The</h1>
 
 <img data-src="img/phdcn_logo_white.svg" class="r-stretch"></section>
-<section class="slide level2">
-
+<section id="section" class="slide level2" data-background-image="img/max-bender-yb7Yg3Rv7WA-unsplash.jpg" data-background-opacity="0.1">
+<h2></h2>
 <h3 id="project-on-human-development-in-chicago-neighborhoods">Project on Human Development in Chicago Neighborhoods</h3>
 <ul>
 <li class="fragment">6200 children in 7 birth cohorts</li>
@@ -389,15 +408,16 @@
 <li class="fragment">682 followed-up in 2021</li>
 <li class="fragment">Focus: <strong>Gun Violence</strong></li>
 </ul>
-<div class="footer">
-<p>See Sampson, Kirk, &amp; Bucci. 2022. “Cohort Profile: Project on Human Development in Chicago Neighborhoods and Its Additions (PHDCN+).” <em>Journal of Developmental and Life-Course Criminology</em> 8. https://doi.org/10.1007/s40865-022-00203-0.</p>
-</div>
 </section>
 <section id="timeline" class="slide level2">
 <h2>Timeline</h2>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<p><img data-src="exposures_slides_files/figure-revealjs/unnamed-chunk-3-1.png" width="960"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="exposures_slides_files/figure-revealjs/unnamed-chunk-3-1.svg"></p>
+</figure>
+</div>
 </div>
 </div>
 <aside class="notes">
@@ -417,9 +437,13 @@
 </section>
 <section id="contexts-of-violence" class="slide level2">
 <h2>Contexts of Violence</h2>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<p><img data-src="exposures_slides_files/figure-revealjs/unnamed-chunk-4-1.png" width="960"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="exposures_slides_files/figure-revealjs/unnamed-chunk-4-1.svg"></p>
+</figure>
+</div>
 </div>
 </div>
 <aside class="notes">
@@ -439,68 +463,212 @@
       }</style></aside>
 </section></section>
 <section>
-<section id="another-section" class="title-slide slide level1 center" data-background-image="img/ozzie-stern-dkwJLowVvl4-unsplash.jpg" data-background-opacity="0.3">
-<h1>Another Section</h1>
+<section id="lifecourse-exposures-to-gun-violence" class="title-slide slide level1 center" data-background-image="img/ozzie-stern-dkwJLowVvl4-unsplash.jpg" data-background-opacity="0.3">
+<h1>Lifecourse Exposures to Gun Violence</h1>
 
 </section>
-<section id="exposure-to-gun-violence" class="slide level2">
-<h2>Exposure to Gun Violence</h2>
+<section id="measures" class="slide level2" data-background-image="img/ozzie-stern-dkwJLowVvl4-unsplash.jpg" data-background-opacity="0.1">
+<h2>Measures</h2>
 <p>Has the respondent…</p>
 <ul>
-<li class="fragment">ever been shot?
-<ul>
-<li class="fragment">Age asked in waves 2 and 5</li>
-</ul></li>
-<li class="fragment">ever seen someone else get shot?
-<ul>
-<li class="fragment">Age only asked in wave 2</li>
-</ul></li>
+<li class="fragment">ever been shot?</li>
+<li class="fragment">ever seen someone else get shot?</li>
 </ul>
+<div class="fragment">
+<p>&nbsp;</p>
+<p>Problem: Interval censoring</p>
+</div>
+<div class="fragment">
+<p>&nbsp;</p>
+<p>Method: Non-parametric MLE (Turnbull 1976)</p>
+</div>
 </section>
-<section id="cohort-differences" class="slide level2">
-<h2>Cohort Differences</h2>
-
-<img data-src="exposures_slides_files/figure-revealjs/unnamed-chunk-5-1.png" width="960" class="r-stretch"></section>
-<section id="what-predicts-exposure" class="slide level2">
-<h2>What Predicts Exposure?</h2>
-<ul>
-<li class="fragment">Race</li>
-<li class="fragment">Sex</li>
-<li class="fragment">Immigrant Generation</li>
-<li class="fragment">Neighborhood Context in Childhood
-<ul>
-<li class="fragment">Tract average Homicide rate</li>
-<li class="fragment">Tract concentrated disadvantage</li>
-<li class="fragment">NC collective efficacy</li>
-</ul></li>
-</ul>
+<section id="been-shot-cohort" class="slide level2">
+<h2>Been shot: cohort</h2>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="exposures_slides_files/figure-revealjs/unnamed-chunk-5-1.svg"></p>
+</figure>
+</div>
+</div>
+</div>
+<aside class="notes">
+<p>Being shot happens mainly in young adulthood: 17 to 25</p>
+<p>Cohort 0 has unusually high early age likelihood of being shot, but looks similar to 12 and 15 later on.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
-<section id="tabular-result" class="slide level2">
-<h2>Tabular result</h2>
+<section id="seen-shot-cohort" class="slide level2">
+<h2>Seen shot: cohort</h2>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="exposures_slides_files/figure-revealjs/unnamed-chunk-6-1.svg"></p>
+</figure>
+</div>
+</div>
+</div>
+<aside class="notes">
+<p>In contrast to being shot, witnessing shootings occurs mainly before age 20</p>
+<p>Due to interval censoring, focus mainly on 9, 12, 15. Fairly similar. Hard to tell here, but cohort zero is unusual with low exposure.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
-<section id="approach" class="slide level2">
-<h2>Approach</h2>
-<blockquote>
-<p>Brief mention of interval censoring, use of Turnbull NPMLE, SPT Prop Hazards</p>
-</blockquote>
+<section id="been-shot-raceethnicity" class="slide level2">
+<h2>Been shot: race/ethnicity</h2>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="exposures_slides_files/figure-revealjs/unnamed-chunk-7-1.svg"></p>
+</figure>
+</div>
+</div>
+</div>
+<aside class="notes">
+<p>Illustrates again that being shot occurs later</p>
+<p>No white respondents were shot after age 22, while black and Hispanic respondents saw exposures in recent period</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="seen-shot-raceethnicity" class="slide level2">
+<h2>Seen shot: race/ethnicity</h2>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="exposures_slides_files/figure-revealjs/unnamed-chunk-8-1.svg"></p>
+</figure>
+</div>
+</div>
+</div>
+<aside class="notes">
+<p>Long plateaus are due to interval censoring: The upticks immediately afterward occurred somewhere in that period.</p>
+<p>Again, we see Seeing someone shot happens earlier than being shot</p>
+<p>Overall exposure lower for white respondents but, unlike being shot, ticks up in later ages, which are all the recent period</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section></section>
-<section id="results" class="title-slide slide level1 center" data-background-image="img/clay-banks-nsAn3nSW5T0-unsplash.jpg" data-background-opacity="0.3">
-<h1>Results</h1>
+<section>
+<section id="risk-and-protective-factors" class="title-slide slide level1 center" data-background-image="img/clay-banks-nsAn3nSW5T0-unsplash.jpg" data-background-opacity="0.3">
+<h1>Risk and Protective Factors</h1>
 
 </section>
-
-<section id="discussion" class="title-slide slide level1 center" data-background-image="img/joel-mott-s-rsM-AktbA-unsplash.jpg" data-background-opacity="0.3">
-<h1>Discussion</h1>
-
+<section id="additional-measures" class="slide level2" data-background-image="img/clay-banks-nsAn3nSW5T0-unsplash.jpg" data-background-opacity="0.1">
+<h2>Additional Measures</h2>
+<ul>
+<li class="fragment">Sex</li>
+<li class="fragment">Immigrant generation</li>
+<li class="fragment">Childhood neighbourhood context
+<ul>
+<li class="fragment">Collective efficacy</li>
+<li class="fragment">Disadvantage</li>
+<li class="fragment">Homicide rate</li>
+</ul></li>
+</ul>
+<div class="fragment">
+<p>Method: Semi-parametric proportional hazards MLE (Anderson-Bergman 2017)</p>
+</div>
+</section>
+<section id="estimates" class="slide level2">
+<h2>Estimates</h2>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="exposures_slides_files/figure-revealjs/icsp-models-estimates-1.svg"></p>
+</figure>
+</div>
+</div>
+</div>
+<aside class="notes">
+<p>Been shot is rare, so statistical power is low</p>
+<p>Most patterns similar across outcomes, except cohort 0</p>
+<p>Here the cohorts are proxying for any historical differences</p>
+<p>This includes different overall city levels of violence</p>
+<p>Very modest relationship between exposure and neighborhood measures; trumped by individual factors</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section></section>
+<section id="takeaways" class="title-slide slide level1 center" data-background-image="img/joel-mott-s-rsM-AktbA-unsplash.jpg" data-background-opacity="0.1">
+<h1>Takeaways</h1>
+<ul>
+<li class="fragment"><p>Being shot tends to occur later in life than seeing shootings</p>
+<ul>
+<li class="fragment">Seen shootings higher when homicide high in adolescence</li>
+<li class="fragment">Being shot higher when homicide high in early adulthood</li>
+</ul></li>
+<li class="fragment"><p>For white respondents:</p>
+<ul>
+<li class="fragment">Seeing someone shot lower across life course</li>
+<li class="fragment">Being shot diverges sharply in adulthood</li>
+</ul></li>
+</ul>
 </section>
 
+<section>
 <section id="appendix" class="title-slide slide level1 center" data-background-image="img/ben-sp-fD4AwrWv4t8-unsplash-crop.jpg" data-background-opacity="0.3">
 <h1>Appendix</h1>
+
+</section>
+<section id="references" class="slide level2">
+<h2>References</h2>
+<p>Sampson, Kirk, &amp; Bucci. 2022. “Cohort Profile: Project on Human Development in Chicago Neighborhoods and Its Additions (PHDCN+).” <em>Journal of Developmental and Life-Course Criminology</em> 8.</p>
+<p>Turnbull. 1976. “The empirical distribution function with arbitrarily grouped, censored and truncated data.” <em>Journal of the Royal Statistical Society: Series B (Methodological)</em> 38(3):290-295.</p>
+<p>Anderson-Bergman. 2017. “icenReg: Regression models for interval censored data in R.” <em>Journal of Statistical Software</em> 81(12):1–23.</p>
 
 <img src="img/phdcn_logo_white.svg" class="slide-logo r-stretch"><div class="footer footer-default">
 
 </div>
-</section>
+</section></section>
     </div>
   </div>
 
