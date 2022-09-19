@@ -434,8 +434,8 @@ survival_data %>%
   geom_richtext(data = ~ . |> group_by(name) |> slice_max(age), aes(label = name), fill = "black" ) +
   theme_minimal(base_size = 24) + 
   scale_x_continuous(breaks = seq(0, 40, by = 10)) +
-  scale_y_continuous(breaks = scales::breaks_pretty(n=3)) +
-  coord_cartesian(clip = "off", xlim = c(0, 45)) +
+  scale_y_continuous(breaks = c(0, 0.1, 0.2, 0.3)) +
+  coord_cartesian(clip = "off", xlim = c(0, 45), ylim = c(0, 0.3)) +
   labs(x = "Age", y = "Proportion", color = "Outcome", title = "Gun Use and Exposure") +
   theme( panel.grid = element_blank(),
           axis.text = element_text(family = plot_font,  color = "white"),
